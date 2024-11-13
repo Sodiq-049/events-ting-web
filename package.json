@@ -1,0 +1,35 @@
+{
+    "name": "client",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint .",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write ."
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,jsx,json,md,yml,yaml}": "npm run format:write",
+        "*.{js,ts}": "npm run lint"
+    },
+    "devDependencies": {
+        "@types/node": "^22.9.0",
+        "eslint": "^9.14.0",
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10",
+        "prettier": "^3.3.3",
+        "typescript": "~5.6.2",
+        "vite": "^5.4.10"
+    },
+    "dependencies": {
+        "html5-qrcode": "^2.3.8"
+    }
+}

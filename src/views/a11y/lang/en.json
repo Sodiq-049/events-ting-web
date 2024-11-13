@@ -1,0 +1,27 @@
+{
+    "home": {
+        "title": "Events Manager",
+        "welcome": "Welcome",
+        "description": "This is the home page"
+    },
+    "about": {
+        "title": "About Us",
+        "content": "We are a company that values excellence."
+    },
+    "scanner": {
+        "title": "Events Manager - Scan",
+        "heading": "Scan Ticket",
+        "tagline": "Align the barcode within the frame to scan"
+    },
+    "events": {
+        "title": "Events Manager - Events",
+        "failToLoad": "Unable to load events. Try again or contact site owners",
+        "noEvents": "There are no events",
+        "service2": "Development",
+        "service3": "Design"
+    },
+    "404": {
+        "title": "4:04am in Valhalla",
+        "tagline": "Nothing to see here!"
+    }
+}
