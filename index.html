@@ -1,26 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <link rel="shortcut icon" href="/favicon.png" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css"
-        />
-        <title>Event Ticketing System</title>
-    </head>
-    <body>
-        <div id="root">
-            <nav id="main-nav" class="nav sidebar">
-                <a href="/" class="nav__link" data-link>Home</a>
-                <a href="/scan" class="nav__link" data-link>Scan</a>
-            </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Ticketing System</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css"
+    />
+    <title>Event Ticketing System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-            <div id="main-page"></div>
-        </div>
+    <header class="header">
+        <h1>Event Check-In</h1>
+        <nav>
+            <a href="/" data-link>Home</a>
+            <a href="/scan" data-link>Scanner</a>
+        </nav>
+    </header>
+    <main class="container" id="app">
+        <section class="scanner-section">
+            <h2>Scan Barcode</h2>
+            <input type="text" id="barcodeInput" placeholder="Scan or Enter Barcode" autofocus>
+            <button id="scanButton">Fetch Info</button>
+        </section>
+        <section class="attendee-section">
+            <h2>Attendee Information</h2>
+            <div id="attendeeInfo" class="info-card">
+                <!-- Attendee details will load here -->
+                <p>No attendee information available.</p>
+            </div>
+            <button id="checkInButton" disabled>Check In</button>
+        </section>
+    </main>
 
-        <script type="module" src="/js/index.js"></script>
-    </body>
+    <script src="/public/js/index.js"></script>
+</body>
 </html>
