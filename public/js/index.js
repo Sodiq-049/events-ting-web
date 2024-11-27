@@ -16,13 +16,16 @@ class Scanner {
         app.innerHTML = `
             <section class="scanner-section">
                 <h2>Scan Barcode</h2>
-                <input type="text" id="barcodeInput" placeholder="Scan or Enter Barcode" autofocus>
+                <button id="startScanner">Start Camera Scanner</button>
+                <div id="cameraContainer" class="camera-container" style="display: none;">
+                    <video id="scannerCamera" autoplay></video>
+                </div>
+                <input type="text" id="barcodeInput" placeholder="Or Enter Barcode Manually" autofocus>
                 <button id="scanButton">Fetch Info</button>
             </section>
             <section class="attendee-section">
                 <h2>Attendee Information</h2>
                 <div id="attendeeInfo" class="info-card">
-                    <!-- Attendee details will load here -->
                     <p>No attendee information available.</p>
                 </div>
                 <button id="checkInButton" disabled>Check In</button>
@@ -32,21 +35,59 @@ class Scanner {
     }
 
     setupScanner() {
+        const startScannerButton = document.getElementById('startScanner');
+        const cameraContainer = document.getElementById('cameraContainer');
+        const scannerCamera = document.getElementById('scannerCamera');
         const scanButton = document.getElementById('scanButton');
-        const checkInButton = document.getElementById('checkInButton');
+        const barcodeInput = document.getElementById('barcodeInput');
         const attendeeInfo = document.getElementById('attendeeInfo');
+        const checkInButton = document.getElementById('checkInButton');
 
+        // Start camera scanner
+        startScannerButton.addEventListener('click', () => {
+            cameraContainer.style.display = 'block';
+            Quagga.init(
+                {
+                    inputStream: {
+                        name: 'Live',
+                        type: 'LiveStream',
+                        target: scannerCamera, // Render camera feed here
+                    },
+                    decoder: {
+                        readers: ['code_128_reader', 'ean_reader', 'ean_8_reader'], // Supported barcode types
+                    },
+                },
+                (err) => {
+                    if (err) {
+                        console.error('Error starting Quagga:', err);
+                        alert('Failed to start camera. Please check permissions or try again.');
+                        return;
+                    }
+                    Quagga.start();
+                }
+            );
+
+            // Listen for detected barcodes
+            Quagga.onDetected((data) => {
+                const code = data.codeResult.code;
+                barcodeInput.value = code; // Autofill the input with scanned code
+                cameraContainer.style.display = 'none'; // Hide camera after scanning
+                Quagga.stop();
+            });
+        });
+
+        // Handle manual input scanning
         scanButton.addEventListener('click', () => {
-            const barcode = document.getElementById('barcodeInput').value.trim();
+            const barcode = barcodeInput.value.trim();
             if (!barcode) {
-                alert('Please enter a barcode');
+                alert('Please enter or scan a barcode');
                 return;
             }
 
             // Simulate API call for fetching attendee info
             const attendeeData = {
-                name: "John Doe",
-                ticketType: "VIP",
+                name: 'John Doe',
+                ticketType: 'VIP',
                 checkedIn: false,
             };
 
@@ -60,13 +101,13 @@ class Scanner {
             checkInButton.disabled = attendeeData.checkedIn;
         });
 
+        // Check-In button
         checkInButton.addEventListener('click', () => {
             alert('Attendee checked in successfully!');
-            checkInButton.disabled = true; // Disable the button after check-in
+            checkInButton.disabled = true; // Disable button after check-in
         });
     }
 }
-
 
 // Define the NotFound view
 class NotFound {
@@ -111,4 +152,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     router();
 });
-
